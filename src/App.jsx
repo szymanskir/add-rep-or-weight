@@ -43,6 +43,10 @@ function Scenarios({ weight, reps, increments }) {
 
   scenarios.sort((a,b) => a.est1RM - b.est1RM)
 
+  // Calculate max reps for padding
+  const maxReps = Math.max(...scenarios.map(s => s.totalReps))
+  const repsDigits = maxReps.toString().length
+
   return (
     <div className="scenarios">
       <h2>Scenarios</h2>
@@ -57,7 +61,7 @@ function Scenarios({ weight, reps, increments }) {
         <tbody>
           {scenarios.map((s, i) => (
             <tr key={i}>
-              <td className="weight-col">{s.totalReps} x {s.totalWeight} kg</td>
+              <td className="weight-col"><span className="padded-reps">{s.totalReps.toString().padStart(repsDigits, ' ')}</span> x {s.totalWeight} kg</td>
               <td className="onerm-col">{s.est1RM} kg</td>
               <td className="operation-col">{s.operation}</td>
             </tr>

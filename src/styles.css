@@ -132,6 +132,10 @@ input[type=number], input[type=text], input{
   color: var(--accent);
 }
 
+.padded-reps {
+  white-space: pre;
+}
+
 .onerm-col {
   font-weight: 600;
 }
