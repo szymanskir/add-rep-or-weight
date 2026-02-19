@@ -92,3 +92,46 @@ input[type=number], input[type=text], input{
   margin-bottom:8px; 
   background: rgba(0,0,0,0.15)
 }
+
+.scenarios-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.scenarios-table thead {
+  background: rgba(0,0,0,0.2);
+}
+
+.scenarios-table th {
+  padding: 10px 8px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.scenarios-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 14px;
+}
+
+.scenarios-table tbody tr:hover {
+  background: rgba(255,255,255,0.02);
+}
+
+.weight-col {
+  font-family: 'Courier New', monospace;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.onerm-col {
+  font-weight: 600;
+}
+
+.operation-col {
+  color: var(--muted);
+  font-size: 13px;
+}

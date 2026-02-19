@@ -25,19 +25,19 @@ function Scenarios({ weight, reps, increments }) {
 
   // 1. Add 1 rep to the current weight
   scenarios.push({
-    title: `+1 rep (same weight ${weight} kg)` ,
-    weight: weight,
-    reps: reps + 1,
-    est1RM: epley1RM(weight, reps + 1)
+    totalWeight: weight,
+    totalReps: reps + 1,
+    est1RM: epley1RM(weight, reps + 1),
+    operation: '+1 rep'
   })
 
   // 2. Keep same reps with different increments
   increments.forEach(inc => {
     scenarios.push({
-      title: `+${inc} kg (same reps ${reps})`,
-      weight: weight + inc,
-      reps: reps,
-      est1RM: epley1RM(weight + inc, reps)
+      totalWeight: weight + inc,
+      totalReps: reps,
+      est1RM: epley1RM(weight + inc, reps),
+      operation: `+${inc} kg`
     })
   })
 
@@ -46,13 +46,24 @@ function Scenarios({ weight, reps, increments }) {
   return (
     <div className="scenarios">
       <h2>Scenarios</h2>
-      <ul>
-        {scenarios.map((s, i) => (
-          <li key={i}>
-            <strong>{s.title}</strong> — est 1RM: {s.est1RM} kg
-          </li>
-        ))}
-      </ul>
+      <table className="scenarios-table">
+        <thead>
+          <tr>
+            <th>Reps × Weight</th>
+            <th>Est 1RM</th>
+            <th>Operation</th>
+          </tr>
+        </thead>
+        <tbody>
+          {scenarios.map((s, i) => (
+            <tr key={i}>
+              <td className="weight-col">{s.totalReps} x {s.totalWeight} kg</td>
+              <td className="onerm-col">{s.est1RM} kg</td>
+              <td className="operation-col">{s.operation}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   )
 }
