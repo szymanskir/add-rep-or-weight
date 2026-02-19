@@ -92,7 +92,7 @@ export default function App(){
       <div className="controls">
         <label>
           Current weight (kg)
-          <input type="number" value={weight} onChange={e => setWeight(parseFloat(e.target.value) || 0)} />
+          <input type="number" value={weight} onChange={e => setWeight(parseFloat(e.target.value) || 0)} step="any" />
         </label>
 
         <label>
