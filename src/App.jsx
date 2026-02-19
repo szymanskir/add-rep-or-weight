@@ -1,5 +1,20 @@
 import React, { useState } from 'react'
 
+const ALL_INCREMENTS = [
+  { value: 0.25, label: '0.25 kg' },
+  { value: 0.5, label: '0.5 kg' },
+  { value: 1, label: '1 kg' },
+  { value: 1.25, label: '1.25 kg' },
+  { value: 2.5, label: '2.5 kg' },
+  { value: 5, label: '5 kg' },
+  { value: 10, label: '10 kg' },
+  { value: 15, label: '15 kg' },
+  { value: 20, label: '20 kg' },
+  { value: 25, label: '25 kg' }
+]
+
+const DEFAULT_INCREMENTS = [1.25, 2.5, 5, 10]
+
 function epley1RM(weight, reps) {
   if (reps <= 0) return 0
   return Math.round(weight * (1 + reps / 30))
@@ -45,9 +60,15 @@ function Scenarios({ weight, reps, increments }) {
 export default function App(){
   const [weight, setWeight] = useState(100)
   const [reps, setReps] = useState(5)
-  const [incStr, setIncStr] = useState('1,2.5,5')
+  const [selectedIncrements, setSelectedIncrements] = useState(DEFAULT_INCREMENTS)
 
-  const increments = incStr.split(',').map(s => parseFloat(s)).filter(n => !isNaN(n))
+  const toggleIncrement = (value) => {
+    setSelectedIncrements(prev => 
+      prev.includes(value)
+        ? prev.filter(v => v !== value)
+        : [...prev, value].sort((a, b) => a - b)
+    )
+  }
 
   return (
     <div className="container">
@@ -63,14 +84,25 @@ export default function App(){
           Reps
           <input type="number" value={reps} onChange={e => setReps(parseInt(e.target.value) || 0)} />
         </label>
-
-        <label>
-          Increments (comma separated kg)
-          <input value={incStr} onChange={e => setIncStr(e.target.value)} />
-        </label>
       </div>
 
-      <Scenarios weight={weight} reps={reps} increments={increments} />
+      <div className="increments-selector">
+        <label>Weight Increments</label>
+        <div className="checkbox-group">
+          {ALL_INCREMENTS.map(inc => (
+            <label key={inc.value} className="checkbox-label">
+              <input
+                type="checkbox"
+                checked={selectedIncrements.includes(inc.value)}
+                onChange={() => toggleIncrement(inc.value)}
+              />
+              {inc.label}
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <Scenarios weight={weight} reps={reps} increments={selectedIncrements} />
     </div>
   )
 }

@@ -24,9 +24,9 @@ body{
 
 .controls{
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 12px;
-  margin-bottom: 18px;
+  margin-bottom: 24px;
 }
 
 label{
@@ -45,5 +45,50 @@ input[type=number], input[type=text], input{
   margin-top:6px;
 }
 
-.scenarios ul{ list-style:none; padding:0 }
-.scenarios li{ padding:10px 8px; border-radius:8px; margin-bottom:8px; background: rgba(0,0,0,0.15)}
+.increments-selector {
+  margin-bottom: 24px;
+}
+
+.increments-selector > label {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.checkbox-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  padding: 12px;
+  background: rgba(0,0,0,0.15);
+  border-radius: 8px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: auto;
+  margin-right: 8px;
+  margin-top: 0;
+  cursor: pointer;
+  accent-color: var(--accent);
+}
+
+.scenarios ul{ 
+  list-style:none; 
+  padding:0 
+}
+
+.scenarios li{ 
+  padding:10px 8px; 
+  border-radius:8px; 
+  margin-bottom:8px; 
+  background: rgba(0,0,0,0.15)
+}
