@@ -83,7 +83,7 @@ export default function App(){
 
   return (
     <div className="container">
-      <h1>Gym Decision Helper</h1>
+      <h1>Add Rep or Weight</h1>
 
       <div className="controls">
         <label>

@@ -22,6 +22,11 @@ body{
   box-shadow: 0 6px 30px rgba(2,6,23,0.6);
 }
 
+.container h1 {
+  text-align: center;
+  margin-top: 0;
+}
+
 .controls{
   display: grid;
   grid-template-columns: repeat(2, 1fr);
