@@ -21,6 +21,16 @@ function epley1RM(weight, reps) {
 }
 
 function Scenarios({ weight, reps, increments, formula }) {
+  // Return early if weight or reps are empty or invalid
+  if (!weight || !reps || weight <= 0 || reps <= 0) {
+    return (
+      <div className="scenarios">
+        <h2>Scenarios</h2>
+        <p style={{ color: 'var(--muted)', fontSize: '13px' }}>Enter weight and reps to see scenarios</p>
+      </div>
+    )
+  }
+
   const scenarios = []
 
   // 1. Add 1 rep to the current weight
@@ -110,12 +120,36 @@ export default function App(){
       <div className="controls">
         <label>
           Current weight (kg)
-          <input type="number" value={weight} onChange={e => setWeight(parseFloat(e.target.value) || 0)} step="any" />
+          <input 
+            type="text" 
+            inputMode="decimal"
+            value={weight} 
+            onChange={e => {
+              const val = e.target.value.trim()
+              if (val === '') setWeight('')
+              else {
+                const num = parseFloat(val)
+                if (!isNaN(num)) setWeight(num)
+              }
+            }} 
+          />
         </label>
 
         <label>
           Reps
-          <input type="number" value={reps} onChange={e => setReps(parseInt(e.target.value) || 0)} />
+          <input 
+            type="text"
+            inputMode="numeric"
+            value={reps} 
+            onChange={e => {
+              const val = e.target.value.trim()
+              if (val === '') setReps('')
+              else {
+                const num = parseInt(val)
+                if (!isNaN(num)) setReps(num)
+              }
+            }}
+          />
         </label>
       </div>
 
