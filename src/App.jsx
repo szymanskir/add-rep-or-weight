@@ -20,14 +20,31 @@ function epley1RM(weight, reps) {
   return Math.round(weight * (1 + reps / 30))
 }
 
-function Scenarios({ weight, reps, increments }) {
+function Scenarios({ weight, reps, increments, formula }) {
   const scenarios = []
 
   // 1. Add 1 rep to the current weight
+  const formulaMap = {
+    epley: epley1RM,
+    brzycki: function(brWeight, brReps){
+      if (brReps <= 0) return 0
+      return Math.round(brWeight * (36 / (37 - brReps)))
+    },
+    lander: function(laWeight, laReps){
+      if (laReps <= 0) return 0
+      return Math.round(laWeight * (100 / (101.3 - 2.67123 * laReps)))
+    }
+  }
+
+  const compute1RM = (w, r) => {
+    const fn = formulaMap[formula] || epley1RM
+    return fn(w, r)
+  }
+
   scenarios.push({
     totalWeight: weight,
     totalReps: reps + 1,
-    est1RM: epley1RM(weight, reps + 1),
+    est1RM: compute1RM(weight, reps + 1),
     operation: '+1 rep'
   })
 
@@ -36,7 +53,7 @@ function Scenarios({ weight, reps, increments }) {
     scenarios.push({
       totalWeight: weight + inc,
       totalReps: reps,
-      est1RM: epley1RM(weight + inc, reps),
+      est1RM: compute1RM(weight + inc, reps),
       operation: `+${inc} kg`
     })
   })
@@ -76,6 +93,7 @@ export default function App(){
   const [weight, setWeight] = useState(100)
   const [reps, setReps] = useState(5)
   const [selectedIncrements, setSelectedIncrements] = useState(DEFAULT_INCREMENTS)
+  const [formula, setFormula] = useState('epley')
 
   const toggleIncrement = (value) => {
     setSelectedIncrements(prev => 
@@ -103,6 +121,7 @@ export default function App(){
 
       <div className="increments-selector">
         <label>Weight Increments</label>
+        <div style={{height:12}} />
         <div className="checkbox-group">
           {ALL_INCREMENTS.map(inc => (
             <label key={inc.value} className="checkbox-label">
@@ -115,9 +134,37 @@ export default function App(){
             </label>
           ))}
         </div>
-      </div>
+        </div>
 
-      <Scenarios weight={weight} reps={reps} increments={selectedIncrements} />
+        <div style={{marginBottom:24}}>
+          <label className="formula-label">1RM Formula</label>
+          <div className="formula-group">
+            <button
+              type="button"
+              className={`seg-btn ${formula === 'epley' ? 'active' : ''}`}
+              onClick={() => setFormula('epley')}
+            >
+              Epley
+            </button>
+            <button
+              type="button"
+              className={`seg-btn ${formula === 'brzycki' ? 'active' : ''}`}
+              onClick={() => setFormula('brzycki')}
+            >
+              Brzycki
+            </button>
+            <button
+              type="button"
+              className={`seg-btn ${formula === 'lander' ? 'active' : ''}`}
+              onClick={() => setFormula('lander')}
+            >
+              Lander
+            </button>
+          
+          </div>
+        </div>
+
+      <Scenarios weight={weight} reps={reps} increments={selectedIncrements} formula={formula} />
     </div>
   )
 }
