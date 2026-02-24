@@ -101,6 +101,7 @@ function Scenarios({ weight, reps, increments, formula }) {
 
 export default function App(){
   const [weight, setWeight] = useState(100)
+  const [weightText, setWeightText] = useState('100');
   const [reps, setReps] = useState(5)
   const [selectedIncrements, setSelectedIncrements] = useState(DEFAULT_INCREMENTS)
   const [formula, setFormula] = useState('epley')
@@ -123,12 +124,13 @@ export default function App(){
           <input 
             type="text" 
             inputMode="decimal"
-            value={weight} 
+            value={weightText}
             onChange={e => {
               const val = e.target.value.trim()
+              setWeightText(val)
               if (val === '') setWeight('')
               else {
-                const num = parseFloat(val)
+                const num = parseFloat(val.replace(',', '.'))
                 if (!isNaN(num)) setWeight(num)
               }
             }} 
